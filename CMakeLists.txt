@@ -10,6 +10,7 @@ add_executable(cpplab main.cpp)
 
 add_executable(
     sse 
+    src/core/cpu/sse.cpp
     src/core/cpu/naive.cpp
     src/core/cpu/avx2.cpp
     sse.cpp
