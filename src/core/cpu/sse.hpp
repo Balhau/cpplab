@@ -10,6 +10,7 @@ namespace core {
         class SSE {
             public:
                 static void sum_128(int *a,int *b);
+                static void sum_128(long *a,long *b);
         };
     };
 };
