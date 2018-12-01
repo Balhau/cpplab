@@ -1,0 +1,12 @@
+bin/
+*.dis
+*.o
+.kdev4/
+.vscode/
+CMakeFiles/
+**/CMakeFiles/
+CMakeCache.txt
+Makefile
+*.cmake
+build/
+
