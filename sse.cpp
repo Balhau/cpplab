@@ -7,7 +7,7 @@
 #include "src/core/cpu/sse.hpp"
 #include "src/core/cpu/utils.hpp"
 
-using namespace core::cpu;
+using namespace Core::Cpu;
 
 long int gettime(){
     struct timeval tp;
@@ -19,11 +19,14 @@ long int gettime(){
 #define MAX_ITER 1000*1000*100
 
 int main(int argc, char** argcv){
-    int v1_128[Utils::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
-    int v2_128[Utils::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
+    UInt v1_128[Utils::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
+    UInt v2_128[Utils::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
 
-    long v1_128_l[Utils::LONG_LEN_128] = { (long)0x2<<32 | 0x2, (long)0x4<<32 | 0x3 };
-    long v2_128_l[Utils::LONG_LEN_128] = { (long)0x2<<32 | 0x2, (long)0x4<<32 | 0x3 };
+    ULong v1_128_l[Utils::LONG_LEN_128];
+    ULong v2_128_l[Utils::LONG_LEN_128];
+
+    Utils::int128BitToLong(v1_128,v1_128_l);
+    Utils::int128BitToLong(v2_128,v2_128_l);
 
     long int start,end;
 
@@ -49,6 +52,6 @@ int main(int argc, char** argcv){
         SSE::sum_128(v1_128_l,v2_128_l);
     }
     end = gettime();
-    cout << "SSE Approach paddd: " << end-start << endl;    
+    cout << "SSE Approach paddd: " << end-start << endl;
 
 }

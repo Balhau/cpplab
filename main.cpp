@@ -5,8 +5,8 @@
 #include <string>
 #include <iomanip>
 
-using namespace core::bmath;
-using namespace core::cpu;
+using namespace Core::bmath;
+using namespace Core::Cpu;
 
 
 int main(int argc, char **argv) {

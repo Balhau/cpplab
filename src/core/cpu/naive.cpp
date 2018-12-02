@@ -1,11 +1,12 @@
 #include "naive.hpp"
+#include "types.hpp"
 #include <iostream>
 
-void core::cpu::Naive::sum_128_long(int *a,int *b){
-    long a1 = ((long)a[0] << 32) | a[1];
-    long a2 = ((long)a[2] << 32) | a[3];
-    long b1 = ((long)b[0] << 32) | b[1];
-    long b2 = ((long)b[2] << 32) | b[3];
+void Core::Cpu::Naive::sum_128_long(UInt *a,UInt *b){
+    ULong a1 = ((ULong)a[0] << 32) | a[1];
+    ULong a2 = ((ULong)a[2] << 32) | a[3];
+    ULong b1 = ((ULong)b[0] << 32) | b[1];
+    ULong b2 = ((ULong)b[2] << 32) | b[3];
 
     a1=a1+b1;
     a2=a2+b2;

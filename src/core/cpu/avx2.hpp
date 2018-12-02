@@ -5,8 +5,8 @@ using namespace std;
 /**
  * This will define a set of functions 
  */
-namespace core {
-    namespace cpu {
+namespace Core {
+    namespace Cpu {
         class avx2 {
             public:
                 static int const AVX2_INT_SIZE=16;

@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <iostream>
 
-namespace core {
+namespace Core {
     namespace bmath {
         class BMath {
             public:
