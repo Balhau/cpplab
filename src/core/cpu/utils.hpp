@@ -32,6 +32,9 @@ namespace Core {
                 static const UChar SHIFT_16 = 16;
                 static const UChar SHIFT_8  = 8;
 
+                /**
+                 * Template function (generics) to enable the printing of several datatypes
+                 */
                 template<typename Number>
                 static void printHex(Number *num,Int len) {
                     for(int i=0;i<len;i++){
@@ -40,7 +43,7 @@ namespace Core {
                             cout << ",";
                         }
                     }
-                    cout << endl;
+                    cout << std << endl;
                 };
 
                 /**
