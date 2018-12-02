@@ -13,6 +13,7 @@ add_executable(
     src/core/cpu/sse.cpp
     src/core/cpu/naive.cpp
     src/core/cpu/avx2.cpp
+    src/core/bmath/complex.cpp
     sse.cpp
 )
 
