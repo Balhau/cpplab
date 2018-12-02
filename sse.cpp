@@ -30,8 +30,11 @@ int main(int argc, char** argcv){
 
     long int start,end;
 
-    Utils::print(v1_128,Utils::INT_LEN_128);
-    Utils::print(v2_128,Utils::INT_LEN_128);
+    Utils::printHex(v1_128,Utils::INT_LEN_128);
+    Utils::printHex(v2_128,Utils::INT_LEN_128);
+
+    Utils::printHex(v1_128_l,Utils::LONG_LEN_128);
+    Utils::printHex(v2_128_l,Utils::LONG_LEN_128);
 
     start = gettime();
     for(int i=0;i<MAX_ITER;i++){
@@ -53,5 +56,8 @@ int main(int argc, char** argcv){
     }
     end = gettime();
     cout << "SSE Approach paddd: " << end-start << endl;
+
+    Utils::printHex(v1_128,Utils::INT_LEN_128);
+    Utils::printHex(v1_128_l,Utils::LONG_LEN_128);
 
 }

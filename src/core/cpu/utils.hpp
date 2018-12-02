@@ -33,9 +33,9 @@ namespace Core {
                 static const UChar SHIFT_8  = 8;
 
                 template<typename Number>
-                static void print(Number *num,Int len) {
+                static void printHex(Number *num,Int len) {
                     for(int i=0;i<len;i++){
-                        cout << num[i] ;
+                        cout << hex << num[i] ;
                         if(i<len-1){
                             cout << ",";
                         }
