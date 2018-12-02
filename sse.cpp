@@ -5,6 +5,7 @@
 
 #include "src/core/cpu/naive.hpp"
 #include "src/core/cpu/sse.hpp"
+#include "src/core/cpu/utils.hpp"
 
 using namespace core::cpu;
 
@@ -18,16 +19,16 @@ long int gettime(){
 #define MAX_ITER 1000*1000*100
 
 int main(int argc, char** argcv){
-    int v1_128[Naive::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
-    int v2_128[Naive::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
+    int v1_128[Utils::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
+    int v2_128[Utils::INT_LEN_128] = { 0x1, 0x2,0x3,0x4 };
 
-    long v1_128_l[Naive::LONG_LEN_128] = { (long)0x2<<32 | 0x2, (long)0x4<<32 | 0x3 };
-    long v2_128_l[Naive::LONG_LEN_128] = { (long)0x2<<32 | 0x2, (long)0x4<<32 | 0x3 };
+    long v1_128_l[Utils::LONG_LEN_128] = { (long)0x2<<32 | 0x2, (long)0x4<<32 | 0x3 };
+    long v2_128_l[Utils::LONG_LEN_128] = { (long)0x2<<32 | 0x2, (long)0x4<<32 | 0x3 };
 
     long int start,end;
 
-    Naive::print(v1_128,Naive::INT_LEN_128);
-    Naive::print(v2_128,Naive::INT_LEN_128);
+    Utils::print(v1_128,Utils::INT_LEN_128);
+    Utils::print(v2_128,Utils::INT_LEN_128);
 
     start = gettime();
     for(int i=0;i<MAX_ITER;i++){
@@ -48,11 +49,6 @@ int main(int argc, char** argcv){
         SSE::sum_128(v1_128_l,v2_128_l);
     }
     end = gettime();
-    cout << "SSE Approach paddd: " << end-start << endl;
-
-
-    //Naive::print(v1_128,Naive::LEN_128);
-    //Naive::print(v2_128,Naive::LEN_128);
-    
+    cout << "SSE Approach paddd: " << end-start << endl;    
 
 }

@@ -15,13 +15,3 @@ void core::cpu::Naive::sum_128_long(int *a,int *b){
     a[2]=a2>>32;
     a[3]=a2;
 };
-
-void core::cpu::Naive::print(int *num, int len){
-    for(int i=0;i<len;i++){
-        cout << num[i] ;
-        if(i<len-1){
-            cout << ",";
-        }
-    }
-    cout << endl;
-};

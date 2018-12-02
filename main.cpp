@@ -10,19 +10,10 @@ using namespace core::cpu;
 
 
 int main(int argc, char **argv) {
-    //Iteration over class
-    //blist<std::string> b = blist<std::string>(std::string("Tudor"));
-    //void *lol = b.current()->value;
-
-    int a[avx2::AVX2_INT_SIZE] = {0x1,0x2,0x3,0x4,0x5,0x6,0x7,0x8,0x9,0xA,0xB,0xC,0xD,0xE,0xF,0x10};
-    int b[avx2::AVX2_INT_SIZE] = {0x2,0x3,0x4,0x5,0x6,0x7,0x8,0x9,0xA,0xB,0xC,0xD,0xE,0xF,0x10,0x11};
-
 
     BMath  bm1 = BMath();
     BMath bm2;
     u_int64_t c1 = bm1.sum(1,2);
-
-
 
     char* input[1024];
     std::string str=std::string();
@@ -33,17 +24,6 @@ int main(int argc, char **argv) {
       delete bm2;
     }
 
-
-
-
-    std::cout << "Computed stuff" << std::endl;
-    std::cin >> str;
-
-
-
-    std::cout << "Input: " << str << std::endl;
-
-    std::cout << "Cena1: " << c1 << std::endl;
 
     blist<int> list = blist<int>();
     std::cout << "List size: " << list.getSize() <<std::endl;
