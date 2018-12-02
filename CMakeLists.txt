@@ -17,6 +17,12 @@ add_executable(
     sse.cpp
 )
 
+add_executable(
+    complex 
+    src/core/bmath/complex.cpp
+    complex.cpp
+)
+
 add_executable(c_time time.cpp)
 
 install(TARGETS cpplab RUNTIME DESTINATION bin)
