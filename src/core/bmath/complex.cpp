@@ -3,7 +3,7 @@
 /** 
  * Constructor implementation
  */ 
-Core::Bmath::Complex::Complex(Long real,Long imaginary){
+Core::Bmath::Complex::Complex(Double real,Double imaginary){
     this->real=real;
     this->imaginary=imaginary;
 };

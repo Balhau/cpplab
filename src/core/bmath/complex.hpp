@@ -10,18 +10,18 @@ namespace Core{
     namespace Bmath{
         class Complex{
             private:
-                Long real;
-                Long imaginary;
+                Double real;
+                Double imaginary;
             
             public:
-                Complex(Long real,Long imaginary);
+                Complex(Double real,Double imaginary);
                 Complex& operator+=(const Complex& rightOp);
                 Complex operator+(const Complex &rightOp);
                 Complex operator*(const Complex &rightOp);
                 
                 //Overload to enable toString operations
                 friend std::ostream& operator<<(std::ostream &stream, Core::Bmath::Complex const &c){
-                    return stream << "(" << c.real << ", " << c.imaginary << "i)";
+                    return stream << "(" << c.real << "+" << c.imaginary << "i)";
                 }
         };
     };
