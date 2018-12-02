@@ -43,7 +43,7 @@ namespace Core {
                             cout << ",";
                         }
                     }
-                    cout << std << endl;
+                    cout << std::dec << endl;
                 };
 
                 /**

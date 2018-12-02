@@ -28,6 +28,8 @@ int main(int argc, char** argcv){
     Utils::int128BitToLong(v1_128,v1_128_l);
     Utils::int128BitToLong(v2_128,v2_128_l);
 
+    SSE::paddw(v1_128,v2_128);
+
     long int start,end;
 
     Utils::printHex(v1_128,Utils::INT_LEN_128);
@@ -45,14 +47,14 @@ int main(int argc, char** argcv){
 
     start = gettime();
     for(int i=0;i<MAX_ITER;i++){
-        SSE::sum_128(v1_128,v2_128);
+        SSE::paddw(v1_128,v2_128);
     }
     end = gettime();
     cout << "SSE Approach paddw: " << end-start << endl;
 
     start = gettime();
     for(int i=0;i<MAX_ITER;i++){
-        SSE::sum_128(v1_128_l,v2_128_l);
+        SSE::paddd(v1_128_l,v2_128_l);
     }
     end = gettime();
     cout << "SSE Approach paddd: " << end-start << endl;

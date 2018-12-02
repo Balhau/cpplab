@@ -11,8 +11,8 @@ namespace Core {
     namespace Cpu {
         class SSE {
             public:
-                static void sum_128(UInt *a,UInt *b);
-                static void sum_128(ULong *a,ULong *b);
+                static void paddw(UInt *a,UInt *b);
+                static void paddd(ULong *a,ULong *b);
         };
     };
 };
