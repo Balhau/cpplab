@@ -1,0 +1,5 @@
+find_package(glfw3 3.3 REQUIRED)
+find_package(OpenGL REQUIRED)
+add_executable(gl1 gl1.cpp)
+target_link_libraries(gl1 glfw)
+target_link_libraries(gl1 OpenGL::GL)

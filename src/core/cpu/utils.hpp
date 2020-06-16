@@ -4,8 +4,6 @@
 #include <iostream>
 #include "types.hpp"
 
-using namespace::std;
-
 
 namespace Core {
     namespace Cpu {

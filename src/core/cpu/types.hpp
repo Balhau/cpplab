@@ -2,7 +2,7 @@
 #define CORE_CPU_TYPES_H
 
     /*
-    * Types for x86 arquitectures
+    * Types for x86 architectures
     */
     #if defined(__x86_64__)
         //Signed type alias

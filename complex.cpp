@@ -16,5 +16,5 @@ int main(int argc, char** argcv){
 
     cout << c1 << "*" << c2 << "=" << c3 << endl;
     cout << c1 << "+" << c2 << "=" << c4 << endl;
-
+    
 }
