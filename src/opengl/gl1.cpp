@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
 
 typedef unsigned int uint;
 
@@ -141,11 +142,14 @@ int main(void)
 
     //Create buffer
     //Buffer id
-    VertexBuffer* vb = new VertexBuffer(positions, 4 * 2 * sizeof(float));
-    GLCall(glEnableVertexAttribArray(0));
-    GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
+    VertexArray va ;
+    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+    
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
+    va.AddBuffer(vb,layout);
 
-    IndexBuffer* ib = new IndexBuffer(indexes,6);
+    IndexBuffer ib(indexes,6);
     ShaderProgramSource source = ParseShader(SHADERS_PATH);
 
     uint shader = CreateShader(source.VertexSource, source.FragmentSource);
@@ -183,8 +187,7 @@ int main(void)
 
         GLCall(glUniform4f(uniform_location, 0.2f, 0.3f, 0.8f, 1.0f));
 
-        //GLCall(glBindVertexArray(vb));
-        ib->Bind();
+        ib.Bind();
 
         GLCall(glDrawElements(GL_TRIANGLES, 6 * sizeof(uint), GL_UNSIGNED_INT, nullptr));
 
@@ -202,8 +205,6 @@ int main(void)
         glfwPollEvents();
     }
 
-    delete ib;
-    delete vb;
     glfwTerminate();
     return 0;
 }

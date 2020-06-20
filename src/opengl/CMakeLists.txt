@@ -13,6 +13,7 @@ add_executable(
   Renderer.cpp
   VertexBuffer.cpp
   IndexBuffer.cpp
+  VertexArray.cpp
   glew.c
 )
 
