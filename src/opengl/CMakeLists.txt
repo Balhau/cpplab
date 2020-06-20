@@ -6,8 +6,15 @@ find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 
-# Add gl1 executable build from gl1.cpp
-add_executable(gl1 gl1.cpp)
+# Add gl1 executable build from gl1.cpp, glew.c and Renderer.cpp
+add_executable(
+  gl1 
+  gl1.cpp
+  Renderer.cpp
+  VertexBuffer.cpp
+  IndexBuffer.cpp
+  glew.c
+)
 
 # Link gl1 with glew
 #target_link_libraries(gl1 glew)

@@ -1,30 +1,14 @@
-#include <GLFW/glfw3.h>
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <signal.h>
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 typedef unsigned int uint;
-
-//Only on opengl4
-static void ErrorGLCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
-{
-    std::cout << "Source: " << source << "Type: " << type << "Id: " << id << "Severity: " << severity << "Length: " << length << message << std::endl;
-}
-
-// Old way to process openGL errors
-static void GLClearError()
-{
-    while (glGetError() != GL_NO_ERROR)
-        ; //Clear error flags
-}
-
-static void GLCheckError(){
-    while(GLenum error = glGetError()){
-        std::cout << "[OpenGL Error] (" << error << ")" << std::endl;
-    }
-}
 
 struct ShaderProgramSource
 {
@@ -140,6 +124,7 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
     //Print opengl version
     std::cout << glGetString(GL_VERSION) << std::endl;
@@ -151,37 +136,36 @@ int main(void)
             0.5f, 0.5f,
             -0.5f, 0.5f};
 
-    uint indexes[] = {
+    unsigned int indexes[] = {
         0, 1, 2, 2, 3, 0};
 
     //Create buffer
     //Buffer id
-    unsigned int buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, 10 * sizeof(float), positions, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+    VertexBuffer* vb = new VertexBuffer(positions, 4 * 2 * sizeof(float));
+    GLCall(glEnableVertexAttribArray(0));
+    GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 
-    unsigned int index_buffer;
-    glGenBuffers(1, &index_buffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(float), indexes, GL_STATIC_DRAW);
-
+    IndexBuffer* ib = new IndexBuffer(indexes,6);
     ShaderProgramSource source = ParseShader(SHADERS_PATH);
 
-    std::cout << "Shaders: " << source.VertexSource << std::endl;
-    std::cout << std::endl;
-    std::cout << source.FragmentSource << std::endl;
-
     uint shader = CreateShader(source.VertexSource, source.FragmentSource);
-    glUseProgram(shader);
+    GLCall(glUseProgram(shader));
 
+    //Find the shader uniform color
+    int uniform_location = glGetUniformLocation(shader, "u_color");
+
+    if (uniform_location == -1)
+    {
+        std::cout << "Error fetching uniform location" << std::endl;
+    }
+
+    float red = 0.0f;
+    float increment = 0.05f;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+        GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
         // Legacy OpenGL
         //glBegin(GL_TRIANGLES);
@@ -194,7 +178,22 @@ int main(void)
         //without index buffer
         //glDrawArrays(GL_TRIANGLES, 0, 12);
         //GLClearError();
-        glDrawElements(GL_TRIANGLES, 6 * sizeof(uint), GL_UNSIGNED_INT, nullptr);
+
+        GLCall(glUseProgram(shader));
+
+        GLCall(glUniform4f(uniform_location, 0.2f, 0.3f, 0.8f, 1.0f));
+
+        //GLCall(glBindVertexArray(vb));
+        ib->Bind();
+
+        GLCall(glDrawElements(GL_TRIANGLES, 6 * sizeof(uint), GL_UNSIGNED_INT, nullptr));
+
+        if (red > 1.0f)
+            increment = -0.05f;
+        else if (red < 0.0f)
+            increment = 0.05f;
+        red += increment;
+
         //GLCheckError();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -203,6 +202,8 @@ int main(void)
         glfwPollEvents();
     }
 
+    delete ib;
+    delete vb;
     glfwTerminate();
     return 0;
 }
