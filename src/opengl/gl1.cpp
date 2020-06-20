@@ -3,22 +3,46 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <signal.h>
 
 typedef unsigned int uint;
 
-struct ShaderProgramSource{
+//Only on opengl4
+static void ErrorGLCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
+{
+    std::cout << "Source: " << source << "Type: " << type << "Id: " << id << "Severity: " << severity << "Length: " << length << message << std::endl;
+}
+
+// Old way to process openGL errors
+static void GLClearError()
+{
+    while (glGetError() != GL_NO_ERROR)
+        ; //Clear error flags
+}
+
+static void GLCheckError(){
+    while(GLenum error = glGetError()){
+        std::cout << "[OpenGL Error] (" << error << ")" << std::endl;
+    }
+}
+
+struct ShaderProgramSource
+{
     std::string VertexSource;
     std::string FragmentSource;
 };
 
-const std::string SHADERS_PATH="src/opengl/res/shaders/Basic.shader";
+const std::string SHADERS_PATH = "src/opengl/res/shaders/Basic.shader";
 
 static ShaderProgramSource ParseShader(const std::string path)
 {
     std::ifstream stream(path);
     std::string line;
-    enum class ShaderType {
-        NONE=-1,VERTEX=0,FRAGMENT=1
+    enum class ShaderType
+    {
+        NONE = -1,
+        VERTEX = 0,
+        FRAGMENT = 1
     };
     std::stringstream ss[2];
     ShaderType type = ShaderType::NONE;
@@ -29,19 +53,20 @@ static ShaderProgramSource ParseShader(const std::string path)
             if (line.find("vertex") != std::string::npos)
             {
                 //vertex
-                type=ShaderType::VERTEX;
+                type = ShaderType::VERTEX;
             }
             else if (line.find("fragment") != std::string::npos)
             {
                 //Fragment
-                type=ShaderType::FRAGMENT;
+                type = ShaderType::FRAGMENT;
             }
-        }else
+        }
+        else
         {
             ss[(int)type] << line << '\n';
         }
     }
-    return {ss[0].str(),ss[1].str()};
+    return {ss[0].str(), ss[1].str()};
 }
 
 static uint CompileShader(uint type, const std::string &source)
@@ -99,6 +124,7 @@ static uint CreateShader(const std::string &vertexShader, const std::string &fra
 int main(void)
 {
     GLFWwindow *window;
+    //glDebugMessageCallback(ErrorGLCallback,0); Enable when glew installed properly
 
     /* Initialize the library */
     if (!glfwInit())
@@ -118,20 +144,33 @@ int main(void)
     //Print opengl version
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    float positions[6] = {-1.0f, -1.0f, 0.0f, 1.0f, 1.0f, -1.0f};
+    float positions[] =
+        {
+            -0.5f, -0.5f,
+            0.5f, -0.5f,
+            0.5f, 0.5f,
+            -0.5f, 0.5f};
+
+    uint indexes[] = {
+        0, 1, 2, 2, 3, 0};
 
     //Create buffer
     //Buffer id
     unsigned int buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 10 * sizeof(float), positions, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
+    unsigned int index_buffer;
+    glGenBuffers(1, &index_buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(float), indexes, GL_STATIC_DRAW);
+
     ShaderProgramSource source = ParseShader(SHADERS_PATH);
 
-    std::cout << "Shaders: " <<  source.VertexSource << std::endl;
+    std::cout << "Shaders: " << source.VertexSource << std::endl;
     std::cout << std::endl;
     std::cout << source.FragmentSource << std::endl;
 
@@ -152,8 +191,11 @@ int main(void)
         //glEnd();
 
         //Modern OpenGL
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
+        //without index buffer
+        //glDrawArrays(GL_TRIANGLES, 0, 12);
+        //GLClearError();
+        glDrawElements(GL_TRIANGLES, 6 * sizeof(uint), GL_UNSIGNED_INT, nullptr);
+        //GLCheckError();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
