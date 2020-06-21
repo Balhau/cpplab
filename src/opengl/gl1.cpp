@@ -12,7 +12,7 @@
 #include "VertexArray.h"
 #include "utils.h"
 
-//const std::string SHADERS_PATH = "src/opengl/res/shaders/Basic.shader";
+const std::string SHADERS_PATH = "src/opengl/res/shaders/Basic.shader";
 
 int main(void)
 {
@@ -70,11 +70,14 @@ int main(void)
 
     IndexBuffer ib(indexes,6);
 
+    Shader shader(SHADERS_PATH);
+    shader.Bind();
+    shader.SetUniform4f("u_Color",0.2f, 0.3f, 0.8f, 1.0f);
 
-    //Find the shader uniform color
-    //int uniform_location = glGetUniformLocation(shader, "u_color");
-
-    //if (uniform_location == -1) LOG("Error fetching uniform location");
+    va.Unbind();
+    vb.Unbind();
+    ib.Unbind();
+    shader.Unbind();  
 
     float red = 0.0f;
     float increment = 0.05f;
@@ -103,6 +106,9 @@ int main(void)
         //ib.Bind();
 
         //GLCall(glDrawElements(GL_TRIANGLES, 6 * sizeof(uint), GL_UNSIGNED_INT, nullptr));
+
+        shader.Bind();
+        shader.SetUniform4f("u_Color",red, 0.3f, 0.8f, 1.0f);
 
         if (red > 1.0f)
             increment = -0.05f;
