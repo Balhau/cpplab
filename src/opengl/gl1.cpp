@@ -79,6 +79,8 @@ int main(void)
     ib.Unbind();
     shader.Unbind();  
 
+    Renderer renderer;
+
     float red = 0.0f;
     float increment = 0.05f;
     /* Loop until the user closes the window */
@@ -109,6 +111,8 @@ int main(void)
 
         shader.Bind();
         shader.SetUniform4f("u_Color",red, 0.3f, 0.8f, 1.0f);
+
+        renderer.draw(va,ib,shader);
 
         if (red > 1.0f)
             increment = -0.05f;

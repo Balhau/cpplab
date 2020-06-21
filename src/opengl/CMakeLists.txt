@@ -18,6 +18,7 @@ add_executable(
   IndexBuffer.cpp
   VertexArray.cpp
   glew.c
+  utils.cpp
 )
 
 
