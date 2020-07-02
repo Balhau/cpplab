@@ -3,7 +3,10 @@
 
 VertexArray::VertexArray()
 {
+  LOG("VERTEX_ARRAY_START");
+  LOG(glGenVertexArrays);
   GLCall(glGenVertexArrays(1,&m_RendererID));
+  LOG("VERTEX_ARRAY_END");
 }
 
 VertexArray::~VertexArray()

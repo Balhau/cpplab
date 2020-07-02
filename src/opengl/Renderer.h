@@ -3,7 +3,7 @@
 //Force the compilation process to statically link glew
 #define GLEW_STATIC
 
-#include "glew.h"
+#include <GL/glew.h> 
 #include <GLFW/glfw3.h>
 #include <csignal>
 

@@ -16,7 +16,15 @@ bool GLLogCall(const char *function, const char *file, int line)
     return true;
   }
   return false;
-} 
+}
+
+void GLPrintVersion()
+{
+  LOG("Vendor: " << glGetString(GL_VENDOR));
+  LOG("Renderer: " << glGetString(GL_RENDERER));
+  LOG("Version: " << glGetString(GL_VERSION));
+  LOG("Shading Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION));
+}
 
 void ErrorGLCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
 {

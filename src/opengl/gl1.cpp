@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <signal.h>
+#include <stdlib.h>
 
 #include "Shader.h"
 #include "Renderer.h"
@@ -25,9 +26,19 @@ int main(void)
     if (!glfwInit())
         return -1;
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2); 
+    glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
     /* Create a windowed mode window and its OpenGL context */
     LOG("Create Window");
+    //glfwCreateWindow(640, 480, "OpenGL Window", NULL, NULL);
+    //GLCall(window = glfwCreateWindow(640, 480, "OpenGL Window", NULL, NULL));
+    
     window = glfwCreateWindow(640, 480, "OpenGL Window", NULL, NULL);
+    
     if (!window)
     {
         LOG("Terminate because not window");
@@ -40,8 +51,7 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    //Print opengl version
-    LOG("GL_VERSION: " << glGetString(GL_VERSION));
+    GLPrintVersion();
 
     float positions[] =
         {
@@ -55,10 +65,7 @@ int main(void)
 
     //Create buffer
     //Buffer id
-
-    LOG("VertexArray defining");
     VertexArray va;
-    LOG("VertexArray defined");
 
     LOG("VertexBuffer to be created");
     VertexBuffer vb(positions, 4 * 2 * sizeof(float));

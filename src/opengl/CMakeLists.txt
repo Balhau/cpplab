@@ -1,7 +1,7 @@
 # Search for glfw
 find_package(glfw3 3.3 REQUIRED)
 # Search for glew
-#find_package(GLEW REQUIRED)
+find_package(GLEW REQUIRED)
 # Search for OpenGL
 find_package(OpenGL REQUIRED)
 add_compile_definitions(IS_DEBUG=1)
@@ -10,14 +10,14 @@ add_compile_definitions(IS_DEBUG=1)
 
 # Add gl1 executable build from gl1.cpp, glew.c and Renderer.cpp
 add_executable(
-  gl1 
+  gl1
+  glew.c
   gl1.cpp
   Shader.cpp
   Renderer.cpp
   VertexBuffer.cpp
   IndexBuffer.cpp
   VertexArray.cpp
-  glew.c
   utils.cpp
 )
 
