@@ -15,127 +15,64 @@
 
 const std::string SHADERS_PATH = "src/opengl/res/shaders/Basic.shader";
 
+static void error_callback(int error, const char *description)
+{
+    fputs(description, stderr);
+}
+static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
 int main(void)
 {
-    LOG("Start OpenGL Demo");
     GLFWwindow *window;
-    //glDebugMessageCallback(ErrorGLCallback,0); Enable when glew installed properly
-
-    /* Initialize the library */
-    LOG("Initialize glfw");
+    glfwSetErrorCallback(error_callback);
     if (!glfwInit())
-        return -1;
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2); 
-    glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-    /* Create a windowed mode window and its OpenGL context */
-    LOG("Create Window");
-    //glfwCreateWindow(640, 480, "OpenGL Window", NULL, NULL);
-    //GLCall(window = glfwCreateWindow(640, 480, "OpenGL Window", NULL, NULL));
-    
-    window = glfwCreateWindow(640, 480, "OpenGL Window", NULL, NULL);
-    
+        exit(EXIT_FAILURE);
+    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
     if (!window)
     {
-        LOG("Terminate because not window");
         glfwTerminate();
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
-    /* Make the window's context current */
-    LOG("GLFW Make context");
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
+    glfwSetKeyCallback(window, key_callback);
 
-    GLPrintVersion();
+    int major, minor, revision;
+    glfwGetVersion(&major, &minor, &revision);
 
-    float positions[] =
-        {
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f, 0.5f,
-            -0.5f, 0.5f};
+    printf("Running against GLFW %i.%i.%i\n", major, minor, revision);
+    LOG(glfwGetVersionString());
 
-    unsigned int indexes[] = {
-        0, 1, 2, 2, 3, 0};
-
-    //Create buffer
-    //Buffer id
-    VertexArray va;
-
-    LOG("VertexBuffer to be created");
-    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
-    //LOG("Create VertexBuffer: " << vb);
-    
-    VertexBufferLayout layout;
-    layout.Push<float>(2);
-    va.AddBuffer(vb,layout);
-
-    IndexBuffer ib(indexes,6);
-
-    Shader shader(SHADERS_PATH);
-    shader.Bind();
-    shader.SetUniform4f("u_Color",0.2f, 0.3f, 0.8f, 1.0f);
-
-    va.Unbind();
-    vb.Unbind();
-    ib.Unbind();
-    shader.Unbind();  
-
-    Renderer renderer;
-
-    float red = 0.0f;
-    float increment = 0.05f;
-    /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        /* Render here */
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
-        // Legacy OpenGL
-        //glBegin(GL_TRIANGLES);
-        //glVertex2f(-1.0f, -1.0f);
-        //glVertex2f(0.0f, 1.0f);
-        //glVertex2f(1.0f, -1.0f);
-        //glEnd();
-
-        //Modern OpenGL
-        //without index buffer
-        //glDrawArrays(GL_TRIANGLES, 0, 12);
-        //GLClearError();
-
-        //GLCall(glUseProgram(shader));
-
-        //GLCall(glUniform4f(uniform_location, 0.2f, 0.3f, 0.8f, 1.0f));
-
-        //ib.Bind();
-
-        //GLCall(glDrawElements(GL_TRIANGLES, 6 * sizeof(uint), GL_UNSIGNED_INT, nullptr));
-
-        shader.Bind();
-        shader.SetUniform4f("u_Color",red, 0.3f, 0.8f, 1.0f);
-
-        renderer.draw(va,ib,shader);
-
-        if (red > 1.0f)
-            increment = -0.05f;
-        else if (red < 0.0f)
-            increment = 0.05f;
-        red += increment;
-
-        //GLCheckError();
-        /* Swap front and back buffers */
+        float ratio;
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+        ratio = width / (float)height;
+        glViewport(0, 0, width, height);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glRotatef((float)glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
+        glBegin(GL_TRIANGLES);
+        glColor3f(1.f, 0.f, 0.f);
+        glVertex3f(-0.6f, -0.4f, 0.f);
+        glColor3f(0.f, 1.f, 0.f);
+        glVertex3f(0.6f, -0.4f, 0.f);
+        glColor3f(0.f, 0.f, 1.f);
+        glVertex3f(0.f, 0.6f, 0.f);
+        glEnd();
         glfwSwapBuffers(window);
-
-        /* Poll for and process events */
         glfwPollEvents();
     }
-
+    glfwDestroyWindow(window);
     glfwTerminate();
-    
-    return 0;
+    exit(EXIT_SUCCESS);
 }

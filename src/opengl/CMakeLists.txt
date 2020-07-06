@@ -1,7 +1,7 @@
 # Search for glfw
 find_package(glfw3 3.3 REQUIRED)
 # Search for glew
-find_package(GLEW REQUIRED)
+find_package(glew REQUIRED)
 # Search for OpenGL
 find_package(OpenGL REQUIRED)
 add_compile_definitions(IS_DEBUG=1)
@@ -22,9 +22,10 @@ add_executable(
 )
 
 
-# Link gl1 with glew
-#target_link_libraries(gl1 glew)
+target_link_libraries(gl1 /usr/local/lib/libGLEW.2.2.0.dylib)
 # Link gl1 with glfw lib
 target_link_libraries(gl1 glfw)
+# Link gl1 with glew
+#target_link_libraries(gl1 glew)
 # Link gl1 with OpenGL
 target_link_libraries(gl1 OpenGL::GL)
