@@ -1,3 +1,5 @@
-add_subdirectory(core)
+add_subdirectory(bmath)
+add_subdirectory(cpu)
+add_subdirectory(dtstruct)
 add_subdirectory(opengl)
 add_subdirectory(misc)
