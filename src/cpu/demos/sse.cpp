@@ -4,7 +4,7 @@
 #include "../naive.hpp"
 #include <sys/time.h>
 
-using namespace Cpu;
+using namespace CPU;
 using namespace std;
 
 long int gettime(){

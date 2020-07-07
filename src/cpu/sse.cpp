@@ -2,7 +2,7 @@
 #include <iostream>
 
 //X86 Assembly to add two 128 bit numbers in the form of packed integers 32bit
-void Cpu::SSE::paddw(UInt *a,UInt *b) {
+void CPU::SSE::paddw(UInt *a,UInt *b) {
     asm(
         "movdqa %0, %%xmm1\n"
         "paddw %1, %%xmm1\n"
@@ -14,7 +14,7 @@ void Cpu::SSE::paddw(UInt *a,UInt *b) {
 
 
 //X86 Assembly to add two 128 bit numbers in the form of packed long 64bit
-void Cpu::SSE::paddd(ULong *a,ULong *b) {
+void CPU::SSE::paddd(ULong *a,ULong *b) {
     asm(
         "movdqa %0, %%xmm1\n"
         "paddd %1, %%xmm1\n"

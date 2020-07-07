@@ -1,12 +1,7 @@
 #pragma once
 
 #include "types.hpp"
-
-using namespace std;
-/**
- * This will define a set of functions 
- */
-namespace Cpu
+namespace CPU
 {
 class Naive
 {

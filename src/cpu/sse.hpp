@@ -2,10 +2,8 @@
 
 #include "types.hpp"
 
-using namespace std;
 
-
-namespace Cpu
+namespace CPU
 {
 class SSE
 {

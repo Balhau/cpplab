@@ -2,11 +2,13 @@
 #include <iostream>
 #include <string>
 
-void Cpu::avx2::avx_sum(int *a, int *b)
+using namespace std;
+
+void CPU::avx2::avx_sum(int *a, int *b)
 {
 }
 
-void Cpu::avx2::printAVX2Num(int *num)
+void CPU::avx2::printAVX2Num(int *num)
 {
     for (int i = 0; i < avx2::AVX2_INT_SIZE; i++)
     {

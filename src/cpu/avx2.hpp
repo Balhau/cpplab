@@ -1,7 +1,5 @@
 #pragma once
-
-using namespace std;
-namespace Cpu
+namespace CPU
 {
 class avx2
 {

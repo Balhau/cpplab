@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace Cpu
+namespace CPU
 {
 class Utils
 {
@@ -39,11 +39,11 @@ public:
     static void long128BitToInt(ULong *packedULong, UInt *packedUInteger)
     {
         //Unpack first long
-        packedUInteger[0] = packedULong[0] && MASK_32;
+        packedUInteger[0] = packedULong[0] & MASK_32;
         packedUInteger[1] = packedULong[0] >> SHIFT_32;
 
         //Unpack second long
-        packedUInteger[2] = packedULong[1] && MASK_32;
+        packedUInteger[2] = packedULong[1] & MASK_32;
         packedUInteger[3] = packedULong[1] >> SHIFT_32;
     };
 };

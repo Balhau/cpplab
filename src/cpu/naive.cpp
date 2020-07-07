@@ -2,7 +2,7 @@
 #include "types.hpp"
 #include <iostream>
 
-void Cpu::Naive::sum_128_long(UInt *a,UInt *b){
+void CPU::Naive::sum_128_long(UInt *a,UInt *b){
     ULong a1 = ((ULong)a[0] << 32) | a[1];
     ULong a2 = ((ULong)a[2] << 32) | a[3];
     ULong b1 = ((ULong)b[0] << 32) | b[1];
