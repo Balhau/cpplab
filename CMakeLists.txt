@@ -12,3 +12,10 @@ add_subdirectory(src)
 #add_executable(c_time time.cpp)
 
 #install(TARGETS cpplab RUNTIME DESTINATION bin)
+
+
+set(CPACK_PACKAGE_CONTACT "Balhau")
+set(CPACK_GENERATOR "STGZ;TGZ;TZ;DEB")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CppLab")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.txt")
+include(CPack)

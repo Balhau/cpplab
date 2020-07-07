@@ -1,4 +1,8 @@
 bin/
+*Darwin.sh
+*Darwin.tar.Z
+install_manifest.txt
+*Darwin.tar.gz
 *.dis
 *.o
 *.dylib
@@ -10,4 +14,3 @@ CMakeCache.txt
 Makefile
 *.cmake
 build/
-
