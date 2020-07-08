@@ -1,7 +1,7 @@
 #pragma once
 
 #include "types.hpp"
-namespace CPU
+namespace cpu
 {
 class Naive
 {

@@ -3,7 +3,7 @@
 #include "types.hpp"
 
 
-namespace CPU
+namespace cpu
 {
 class SSE
 {

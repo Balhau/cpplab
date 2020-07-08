@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace CPU
+namespace cpu
 {
 class Utils
 {

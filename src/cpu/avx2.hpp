@@ -1,5 +1,5 @@
 #pragma once
-namespace CPU
+namespace cpu
 {
 class avx2
 {
