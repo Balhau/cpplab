@@ -1,4 +1,1 @@
-add_executable(
-  spointer
-  smartpointer.cpp
-)
+add_subdirectory(memory)
