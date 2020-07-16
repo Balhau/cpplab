@@ -1,6 +1,7 @@
 #include "math.hpp"
 
 //http://graphics.stanford.edu/~seander/bithacks.html
+//https://hbfs.wordpress.com/2008/08/05/branchless-equivalents-of-simple-functions/
 //access CHAR_BIT --> const with number of bits in a byte (usually 8)
 #include <limits.h>
 #include <iostream>
@@ -32,7 +33,7 @@ inline Int msb2(Int value)
   } SInt;
 
   SInt sint = {.sint = value};
-  return sint.sint;
+  return sint.int_with_msb.signal;
 };
 
 /**
@@ -51,7 +52,13 @@ Float BMath::Math<Float>::abs(Float value)
 };
 
 template <>
+Int BMath::Math<Int>::min(Int a,Int b)
+{
+  return b + ((a-b) & msb2(a-b));
+}
+
+template <>
 Int BMath::Math<Int>::max(Int a,Int b)
 {
-  return (a-b) & msb2(a-b);
+  return a + ((b-a) & ~msb2(b-a));
 }
