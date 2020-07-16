@@ -20,6 +20,8 @@ inline Int msb(Int value)
  * with the help of union and struct trickery. 
  * We basically define a new Union datatype named SInt we use the structure int_with_msb as a way to de-structure
  * the Int sint information. 
+ * More on unions
+ * https://www.geeksforgeeks.org/union-c/
  */
 inline Int msb2(Int value)
 {
@@ -31,7 +33,6 @@ inline Int msb2(Int value)
     } int_with_msb;
     Int sint;
   } SInt;
-
   SInt sint = {.sint = value};
   return sint.int_with_msb.signal;
 };
@@ -52,13 +53,13 @@ Float BMath::Math<Float>::abs(Float value)
 };
 
 template <>
-Int BMath::Math<Int>::min(Int a,Int b)
+Int BMath::Math<Int>::min(Int a, Int b)
 {
-  return b + ((a-b) & msb2(a-b));
+  return b + ((a - b) & msb2(a - b));
 }
 
 template <>
-Int BMath::Math<Int>::max(Int a,Int b)
+Int BMath::Math<Int>::max(Int a, Int b)
 {
-  return a + ((b-a) & ~msb2(b-a));
+  return a + ((b - a) & ~msb2(b - a));
 }
