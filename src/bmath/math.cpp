@@ -6,15 +6,6 @@
 #include <limits.h>
 #include <iostream>
 
-typedef union {
-    struct
-    {
-      Int value : 31;
-      Int signal : 1;
-    } int_with_msb;
-    Int signed_int;
-  } SignedInt;
-
 /**
  * This will get the most significant bit of the Int value. If the most significant bit is 1 then the number is 
  * 0x11111111 --> equals to -1 integer
